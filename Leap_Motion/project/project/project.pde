@@ -1,6 +1,5 @@
 import de.voidplus.leapmotion.*;
 import java.util.*;
-import java.util.Arrays;
 
 
 LeapMotion leap;
@@ -15,34 +14,37 @@ void setup(){
 
 void draw(){
  background(0);
- trigger();
-
+ //if(Iot Serial no signal){
+   trigger();
+ //}
  long fps = leap.getId();
  text(fps, 70,70);
- text("11",50,70);
 }
 
 void trigger() {
- float a=0;
+ int a = 0;
  long fps = leap.getId();
  ArrayList count = new ArrayList();
  for (Hand hand : leap.getHands ()) { count = hand.getOutstretchedFingers();} // Counting Finger
  for(Hand hand : leap.getHands()){ 
   
-    if(hand.getGrabStrength()==1.000&&fps%10==0){
-        a = hand.getGrabStrength();
+    if(hand.getGrabStrength()==1.000&&fps%25==0){//punch
+        a = (int)hand.getGrabStrength();
         TriggerPoint.arr.add(a);
     }
-    else if(fps%30==0) {TriggerPoint.arr.add(a);}
+    else if(fps%30==0) {TriggerPoint.arr.add(a);}//flat hand
     
     if(TriggerPoint.arr.size()==3){
-      println(TriggerPoint.arr);
-      println(TriggerPoint.arr2);
-      boolean start = Arrays.equals(TriggerPoint.arr.toArray(), TriggerPoint.arr2.toArray());
-      println(start);
-      if(start == true){println("Success");}
+    println(TriggerPoint.arr);
+    println(TriggerPoint.arr2);
+    boolean start = TriggerPoint.arr.equals(TriggerPoint.arr2);
+    println(start);
+    if(start == true){println("Success");}//connect Iot device here
     }
     
-    if(hand.getTimeVisible()<=1||TriggerPoint.arr.size()==3){TriggerPoint.arr.clear();}   
+
+    if(hand.getTimeVisible()<=1||TriggerPoint.arr.size()==3){TriggerPoint.arr.clear();}
+
+   
   }
 }
