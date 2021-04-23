@@ -18,6 +18,7 @@ void draw(){
  long fps = leap.getId();
  text(fps, 70,70);
  if( trigger() ){
+   hand_waiting(leap,0.5);
    println( static_gesture() );
   }
 }
