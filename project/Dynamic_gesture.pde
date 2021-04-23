@@ -7,24 +7,6 @@ import java.util.*;
 // ├─ 2. Circle Gesture
 
 // ======================================================
-String static_gesture(){
-  Controller controller = new Controller();
-  Frame frame = controller.frame();
-  String outstretched="";
-  
-  for(com.leapmotion.leap.Hand hand : frame.hands()){
-    if(hand.isRight()==true){outstretched+="1";}// righthand
-    else {outstretched+="0";} // lefthand
-    for(com.leapmotion.leap.Finger finger : hand.fingers()) {
-      com.leapmotion.leap.Finger.Type fingerType = finger.type();
-      if(finger.isExtended()==true){outstretched +="1";}
-      else if(finger.isExtended()==false){outstretched +="0";}       
-    }
-    //println(outstretched);
-  }
-  return outstretched;
-}
-
 
 void leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
   int     id               = g.getId();
@@ -38,18 +20,17 @@ void leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
 
   ArrayList count = new ArrayList();
    
-  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {
-   
-      count = hand.getOutstretchedFingers();
-  }
-
+  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {  count = hand.getOutstretchedFingers();}
+  
   switch(state){
     case 1: // Start
       break;
     case 2: // Update
       break;
     case 3: // Stop
-      println(static_gesture() + " Fingers" + " SwipeGesture: " + id); 
+      //use yaw to detect direction direction.array()[2] = yaw
+      if(direction.array()[2]<0){println(" left SwipeGesture ");}
+      else if(direction.array()[2]>0){println(" right SwipeGesture ");}
       break;
   }
 }
@@ -87,12 +68,6 @@ void leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
      
           break;
       }
-      break;
-  }
-  switch(direction){
-    case 0: // Anticlockwise/Left gesture
-      break;
-    case 1: // Clockwise/Right gesture
       break;
   }
   
