@@ -24,11 +24,11 @@ boolean trigger() {
       //println("OPEN!! - ", when_open);
     }
     
-    float t_delta = TriggerPoint.when_open - TriggerPoint.when_fist;
+    float t_delta = TriggerPoint.when_open - TriggerPoint.when_fist; //time difference
     //println(t_delta, " ", TriggerPoint.when_fist, " ", TriggerPoint.when_open); 
     if(TriggerPoint.when_fist > 0 && TriggerPoint.when_open > 0 && TriggerPoint.when_open > TriggerPoint.when_fist){
       //println("stage1!!");
-      if(t_delta <= 1){
+      if(t_delta <= 1){// when trigger happened
         println("True!!");
         TriggerPoint.when_fist = TriggerPoint.when_open = -1;
         return true;
