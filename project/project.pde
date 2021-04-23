@@ -15,9 +15,9 @@ void setup(){
 void draw(){
  background(0);
  //if(Iot Serial no signal){
-     long fps = leap.getId();
-     text(fps, 70,70);
-     trigger();
-   //static_gesture();
- //}
+ long fps = leap.getId();
+ text(fps, 70,70);
+ if( trigger() ){
+   println( static_gesture() );
+  }
 }
