@@ -1,6 +1,3 @@
-import de.voidplus.leapmotion.*;
-import java.util.*;
-
 // ======================================================
 // Table of Contents:
 // ├─ 1. Swipe Gesture
@@ -8,7 +5,16 @@ import java.util.*;
 
 // ======================================================
 
-void leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
+static class gesture_code {
+     public static String dy_code = "00";
+     public static String st_code = "00";
+     public static float time_st = -1;
+     public static float time_dy = -1;
+}
+
+
+
+String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
   int     id               = g.getId();
   de.voidplus.leapmotion.Finger  finger           = g.getFinger();
   PVector position         = g.getPosition();
@@ -17,11 +23,11 @@ void leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
   float   speed            = g.getSpeed();
   long    duration         = g.getDuration();
   float   durationSeconds  = g.getDurationInSeconds();
-
+  
+  String result="s9"; // s = Swipe , 0 = left, 1 = right , 9 = error
   ArrayList count = new ArrayList();
    
   for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {  count = hand.getOutstretchedFingers();}
-  
   switch(state){
     case 1: // Start
       break;
@@ -29,17 +35,31 @@ void leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
       break;
     case 3: // Stop
       //use yaw to detect direction direction.array()[2] = yaw
-      if(direction.array()[2]<0){println(" left SwipeGesture ");}
-      else if(direction.array()[2]>0){println(" right SwipeGesture ");}
-      break;
+      if(direction.array()[2]<0){ 
+        result = "s0"; 
+        //println(result); //test code
+        gesture_code.dy_code = result;
+        ////////////gesture_code.time_dy =.getTimeVisible();
+        return result;
+      }// Swipe left
+      
+      else if(direction.array()[2]>0){
+        result = "s1"; 
+        //println(result); //test code
+        gesture_code.dy_code = result;
+        return result;
+      } // Swipe right
+     break;
   }
+  gesture_code.dy_code = result;
+  return result;
 }
 
 
 // ======================================================
 // 2. Circle Gesture
 
-void leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
+String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
   int     id               = g.getId();
   de.voidplus.leapmotion.Finger  finger           = g.getFinger();
   PVector positionCenter   = g.getCenter();
@@ -48,6 +68,7 @@ void leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
   long    duration         = g.getDuration();
   float   durationSeconds  = g.getDurationInSeconds();
   int     direction        = g.getDirection();
+  String result="c9"; // c = Circle , 0 = AntiCircleWise, 1 = CircleWise , 9 = error
 
   ArrayList count = new ArrayList();//finger count
   for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {count = hand.getOutstretchedFingers();}
@@ -58,20 +79,21 @@ void leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
     case 2: // Update
       break;
     case 3: // Stop
-      println("CircleGesture: " + id);
-      switch(direction){
-        case 0: // Anticlockwise/Left gesture
-          println("Anticlockwise");
-          break;
-        case 1: // Clockwise/Right gesture
-          println(static_gesture() + " Fingers"  + " Clockwise");
-     
-          break;
+      if(direction == 0){ // Anticlockwise/Left gesture
+          result = "c0";
+          //println(result); //test code
+          gesture_code.dy_code = result;
+          return result;
+      }
+          
+      else if(direction == 1){ // Clockwise/Right gesture
+          result = "c1";
+          //println(result); //test code
+          gesture_code.dy_code = result;
+          return result;
       }
       break;
   }
-  
-  if(count.size()==2 && state==1){
-    println("Happy Time");
-  }
+  gesture_code.dy_code = result;
+  return result;
 }

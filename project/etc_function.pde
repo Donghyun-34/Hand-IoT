@@ -1,6 +1,8 @@
-import de.voidplus.leapmotion.*;
-import java.util.*;
-import com.leapmotion.leap.*;
+
+static class flow_status{
+     public static int draw_stage = 1;
+     public static float when_open = -1;
+}
 
 //function for waiting n seconds
 //10000000 == 1 sec, but bit slower

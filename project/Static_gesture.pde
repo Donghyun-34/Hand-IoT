@@ -1,6 +1,3 @@
-import de.voidplus.leapmotion.*;
-import java.util.*;
-
 String static_gesture(){
   Controller controller = new Controller();
   Frame frame = controller.frame();
@@ -15,6 +12,8 @@ String static_gesture(){
       else if(finger.isExtended()==false){outstretched +="0";}       
     }
     //println(outstretched);
+    gesture_code.time_st = hand.timeVisible();
   }
+  gesture_code.st_code = outstretched;
   return outstretched;
 }
