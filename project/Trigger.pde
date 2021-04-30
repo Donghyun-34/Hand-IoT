@@ -1,8 +1,3 @@
-import de.voidplus.leapmotion.*;
-import java.util.*;
-import com.leapmotion.leap.*;
-
-
 //need to polish this sh!t
 
 
