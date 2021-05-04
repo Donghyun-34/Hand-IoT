@@ -7,11 +7,9 @@ String static_gesture(){
     if(hand.isRight()==true){outstretched+="1";}// righthand
     else {outstretched+="0";} // lefthand
     for(com.leapmotion.leap.Finger finger : hand.fingers()) {
-      com.leapmotion.leap.Finger.Type fingerType = finger.type();
       if(finger.isExtended()==true){outstretched +="1";}
       else if(finger.isExtended()==false){outstretched +="0";}       
     }
-    //println(outstretched);
     gesture_code.time_st = hand.timeVisible();
   }
   gesture_code.st_code = outstretched;
