@@ -2,7 +2,6 @@
 // Table of Contents:
 // ├─ 1. Swipe Gesture
 // ├─ 2. Circle Gesture
-
 // ======================================================
 
 static class gesture_code {
@@ -13,21 +12,13 @@ static class gesture_code {
 }
 
 
-
 String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
-  int     id               = g.getId();
-  de.voidplus.leapmotion.Finger  finger           = g.getFinger();
-  PVector position         = g.getPosition();
-  PVector positionStart    = g.getStartPosition();
   PVector direction        = g.getDirection();
-  float   speed            = g.getSpeed();
-  long    duration         = g.getDuration();
-  float   durationSeconds  = g.getDurationInSeconds();
   
   String result="s9"; // s = Swipe , 0 = left, 1 = right , 9 = error
-  ArrayList count = new ArrayList();
    
-  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {  count = hand.getOutstretchedFingers();}
+  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()){
+    
   switch(state){
     case 1: // Start
       break;
@@ -39,7 +30,7 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
         result = "s0"; 
         //println(result); //test code
         gesture_code.dy_code = result;
-        ////////////gesture_code.time_dy =.getTimeVisible();
+        gesture_code.time_dy = hand.getTimeVisible();
         return result;
       }// Swipe left
       
@@ -47,10 +38,14 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
         result = "s1"; 
         //println(result); //test code
         gesture_code.dy_code = result;
+        gesture_code.time_dy = hand.getTimeVisible();
         return result;
       } // Swipe right
      break;
   }
+  
+  }
+  
   gesture_code.dy_code = result;
   return result;
 }
@@ -60,18 +55,11 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
 // 2. Circle Gesture
 
 String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
-  int     id               = g.getId();
-  de.voidplus.leapmotion.Finger  finger           = g.getFinger();
-  PVector positionCenter   = g.getCenter();
   float   radius           = g.getRadius();
-  float   progress         = g.getProgress();
-  long    duration         = g.getDuration();
-  float   durationSeconds  = g.getDurationInSeconds();
   int     direction        = g.getDirection();
   String result="c9"; // c = Circle , 0 = AntiCircleWise, 1 = CircleWise , 9 = error
 
-  ArrayList count = new ArrayList();//finger count
-  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {count = hand.getOutstretchedFingers();}
+  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {
 
   switch(state){
     case 1: // Start
@@ -83,6 +71,7 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
           result = "c0";
           //println(result); //test code
           gesture_code.dy_code = result;
+          gesture_code.time_dy = hand.getTimeVisible();
           return result;
       }
           
@@ -90,9 +79,12 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
           result = "c1";
           //println(result); //test code
           gesture_code.dy_code = result;
+          gesture_code.time_dy = hand.getTimeVisible();
           return result;
       }
       break;
+  }
+  
   }
   gesture_code.dy_code = result;
   return result;
