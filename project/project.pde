@@ -3,10 +3,15 @@ import java.util.*;
 import com.leapmotion.leap.*;
 import http.requests.*;
 
+
 LeapMotion leap;
 ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100000", "011111", "000000", "00") );
 ArrayList<String> err_dyid = new ArrayList<String>( Arrays.asList("s9", "c9") );
 ArrayList<String> do_dyid = new ArrayList<String>( Arrays.asList("s1", "s0", "c1", "c0") );
+static final long _TIMEOUT_ = 5000000; // set time for timeout
+static final long _TIMESG_ = 1000000; // set time for static_gesture recongization
+static final long _TIMEDG_ = 500000; // set time for static_gesture recongization
+ 
  
 void setup(){
   size(800, 500);
@@ -26,27 +31,28 @@ void draw(){
        println("Stage 1 Pass ");
        Status.stage = 2;
        Status.timeout_stamp = leap.getTimestamp();
+       gesture_code.rec_flag = true;
        gestureInit();
      }
      break;
    
    case 2 : //where static_gesture is tested
      //hand_waiting(leap,0.5);
-     if ( leap.getTimestamp() - Status.timeout_stamp > 2000000 ){
+     if ( leap.getTimestamp() - Status.timeout_stamp > _TIMEOUT_ ){
        println("Stage 2 Time-out ");
        statusInit();
        break;
      }
      
      setTimetemp(leap);
-     if ( leap.getTimestamp() - Status.timetemp_stamp > 630000 && !ban_stid.contains( static_gesture() ) ){
+     if ( leap.getTimestamp() - Status.timetemp_stamp > _TIMESG_ && !ban_stid.contains( static_gesture() ) ){
        println("Stage 2 pass, st_code : ", gesture_code.st_code);
        gesture_code.rec_flag = true;
        Status.stage = 3;
      }
      
    case 3 : //where dynamic_gesture is tested
-     if ( leap.getTimestamp() - Status.timeout_stamp > 2000000 ){
+     if ( leap.getTimestamp() - Status.timeout_stamp > _TIMEOUT_ ){
        println("Stage 3 Time-out, st_code : ", gesture_code.st_code);
        if( err_dyid.contains( gesture_code.dy_code ) ){
          println("dy_err : ", gesture_code.dy_code);
@@ -54,7 +60,8 @@ void draw(){
        statusInit();
        break;
      }
-     else if( do_dyid.contains( gesture_code.dy_code ) ){
+     setTimetemp(leap);
+     if( leap.getTimestamp() - Status.timetemp_stamp > _TIMEDG_ && do_dyid.contains( gesture_code.dy_code ) ){
        gesture_code.rec_flag = false;
        //do stuff here
        println("do stuff here, dy_code : ", gesture_code.dy_code);
