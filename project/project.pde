@@ -3,26 +3,61 @@ import java.util.*;
 import com.leapmotion.leap.*;
 
 LeapMotion leap;
+ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100000", "011111", "000000", "00") );
+ArrayList<String> err_dyid = new ArrayList<String>( Arrays.asList("s9", "c9") );
+ArrayList<String> do_dyid = new ArrayList<String>( Arrays.asList("s1", "s0", "c1", "c0") );
  
 void setup(){
   size(800, 500);
   background(255);
   leap = new LeapMotion(this);
   leap.allowGestures("swipe, circle");
-  // leap = new LeapMotion(this).allowGestures("circle, swipe, screen_tap, key_tap");
-  // leap = new LeapMotion(this).allowGestures("swipe");  // Leap detects only swipe gestures
 }
 
 void draw(){
  background(0);
- //if(Iot Serial no signal){
  long fps = leap.getId();
  text(fps, 70,70);
- if( trigger() ){
-   hand_waiting(leap,0.5);
-   static_gesture();
+ 
+ switch(Status.stage){
+   case 1 :
+     if( trigger() ){
+       println("Stage 1 Pass ");
+       Status.stage = 2;
+       Status.timeout_stamp = leap.getTimestamp();
+       gestureInit();
+     }
+     break;
    
-   println("dy_code : ", gesture_code.dy_code, "   st_code : ", gesture_code.st_code);
-   gesture_code.dy_code = gesture_code.st_code = "00";
-  }
+   case 2 : //where static_gesture is tested
+     //hand_waiting(leap,0.5);
+     if ( leap.getTimestamp() - Status.timeout_stamp > 2000000 ){
+       println("Stage 2 Time-out ");
+       statusInit();
+       break;
+     }
+     
+     setTimetemp(leap);
+     if ( leap.getTimestamp() - Status.timetemp_stamp > 630000 && !ban_stid.contains( static_gesture() ) ){
+       println("Stage 2 pass, st_code : ", gesture_code.st_code);
+       Status.stage = 3;
+     }
+     
+   case 3 : //where dynamic_gesture is tested
+     if ( leap.getTimestamp() - Status.timeout_stamp > 2000000 ){
+       println("Stage 3 Time-out, st_code : ", gesture_code.st_code);
+       if( err_dyid.contains( gesture_code.dy_code ) ){
+         println("dy_err : ", gesture_code.dy_code);
+       }
+       statusInit();
+       break;
+     }
+     else if( do_dyid.contains( gesture_code.dy_code ) ){
+       //do stuff here
+       println("do stuff here, dy_code : ", gesture_code.dy_code);
+       statusInit();
+       break;
+     }
+ }
+ 
 }
