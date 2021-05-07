@@ -12,6 +12,13 @@ static class gesture_code {
 }
 
 
+//initialize 'gesture_code'
+void gestureInit(){
+  gesture_code.dy_code = gesture_code.st_code = "00";
+  gesture_code.time_st = gesture_code.time_dy = -1;
+}
+
+
 String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
   PVector direction        = g.getDirection();
   
