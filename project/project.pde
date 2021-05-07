@@ -1,6 +1,7 @@
 import de.voidplus.leapmotion.*;
 import java.util.*;
 import com.leapmotion.leap.*;
+import http.requests.*;
 
 LeapMotion leap;
 ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100000", "011111", "000000", "00") );
@@ -40,6 +41,7 @@ void draw(){
      setTimetemp(leap);
      if ( leap.getTimestamp() - Status.timetemp_stamp > 630000 && !ban_stid.contains( static_gesture() ) ){
        println("Stage 2 pass, st_code : ", gesture_code.st_code);
+       gesture_code.rec_flag = true;
        Status.stage = 3;
      }
      
@@ -53,6 +55,7 @@ void draw(){
        break;
      }
      else if( do_dyid.contains( gesture_code.dy_code ) ){
+       gesture_code.rec_flag = false;
        //do stuff here
        println("do stuff here, dy_code : ", gesture_code.dy_code);
        statusInit();
