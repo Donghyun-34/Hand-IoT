@@ -5,6 +5,8 @@ import http.requests.*;
 
 
 LeapMotion leap;
+String baseURL="http://192.168.244.201/gpio1/";
+
 ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100000", "011111", "000000", "00") );
 ArrayList<String> err_dyid = new ArrayList<String>( Arrays.asList("s9", "c9") );
 ArrayList<String> do_dyid = new ArrayList<String>( Arrays.asList("s1", "s0", "c1", "c0") );
@@ -65,6 +67,19 @@ void draw(){
        gesture_code.rec_flag = false;
        //do stuff here
        println("do stuff here, dy_code : ", gesture_code.dy_code);
+       
+       if(gesture_code.st_code=="001100" && gesture_code.dy_code=="s0"){
+         println(gesture_code.st_code);
+         print(gesture_code.dy_code);
+         GetRequest get = new GetRequest(baseURL+"1"); 
+         get.send();
+         println("Reponse Content: " + get.getContent());
+       }
+       else if(gesture_code.st_code=="001111" && gesture_code.dy_code=="s1"){
+         GetRequest get = new GetRequest(baseURL+"0"); 
+         get.send();
+         println("Reponse Content: " + get.getContent());
+       }
        statusInit();
        break;
      }
