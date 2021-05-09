@@ -27,7 +27,9 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
   String result="s9"; // s = Swipe , 0 = left, 1 = right , 9 = error
   ArrayList count = new ArrayList();
    
-  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {  count = hand.getOutstretchedFingers();}
+  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {
+    count = hand.getOutstretchedFingers();
+  }
   switch(state){
     case 1: // Start
       break;
@@ -71,7 +73,9 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
   String result="c9"; // c = Circle , 0 = AntiCircleWise, 1 = CircleWise , 9 = error
 
   ArrayList count = new ArrayList();//finger count
-  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {count = hand.getOutstretchedFingers();}
+  for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {
+    count = hand.getOutstretchedFingers();
+  }
 
   switch(state){
     case 1: // Start
