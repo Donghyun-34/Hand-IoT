@@ -1,6 +1,3 @@
-//need to polish this sh!t
-
-
 static class TriggerPoint {
      public static float when_fist = -1;
      public static float when_open = -1;
