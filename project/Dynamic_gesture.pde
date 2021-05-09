@@ -7,15 +7,17 @@
 static class gesture_code {
      public static String dy_code = "00";
      public static String st_code = "00";
-     public static float time_st = -1;
-     public static float time_dy = -1;
+     //public static float time_st = -1;
+     //public static float time_dy = -1;
+     public static boolean rec_flag = false;
 }
 
 
 //initialize 'gesture_code'
 void gestureInit(){
   gesture_code.dy_code = gesture_code.st_code = "00";
-  gesture_code.time_st = gesture_code.time_dy = -1;
+  //gesture_code.time_st = gesture_code.time_dy = -1;
+  gesture_code.rec_flag = false;
 }
 
 
@@ -33,19 +35,24 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
       break;
     case 3: // Stop
       //use yaw to detect direction direction.array()[2] = yaw
-      if(direction.array()[2]<0){ 
-        result = "s0"; 
+      if ( !gesture_code.rec_flag ){
+        break;
+      }
+      else if(direction.array()[2]<0){ 
+        result = "s0";
+        gesture_code.rec_flag = false;
         //println(result); //test code
         gesture_code.dy_code = result;
-        gesture_code.time_dy = hand.getTimeVisible();
+        //gesture_code.time_dy = hand.getTimeVisible();
         return result;
       }// Swipe left
       
       else if(direction.array()[2]>0){
         result = "s1"; 
+        gesture_code.rec_flag = false;
         //println(result); //test code
         gesture_code.dy_code = result;
-        gesture_code.time_dy = hand.getTimeVisible();
+        //gesture_code.time_dy = hand.getTimeVisible();
         return result;
       } // Swipe right
      break;
@@ -74,19 +81,23 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
     case 2: // Update
       break;
     case 3: // Stop
-      if(direction == 0){ // Anticlockwise/Left gesture
+      if ( !gesture_code.rec_flag ){
+          break;
+      }
+      else if(direction == 0){ // Anticlockwise/Left gesture
           result = "c0";
+          gesture_code.rec_flag = false;
           //println(result); //test code
           gesture_code.dy_code = result;
-          gesture_code.time_dy = hand.getTimeVisible();
+          //gesture_code.time_dy = hand.getTimeVisible();
           return result;
       }
-          
       else if(direction == 1){ // Clockwise/Right gesture
           result = "c1";
+          gesture_code.rec_flag = false;
           //println(result); //test code
           gesture_code.dy_code = result;
-          gesture_code.time_dy = hand.getTimeVisible();
+          //gesture_code.time_dy = hand.getTimeVisible();
           return result;
       }
       break;
