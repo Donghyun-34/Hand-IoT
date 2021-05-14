@@ -1,8 +1,8 @@
 #include <SPI.h> 
 #include <WiFiNINA.h> 
 
-int led1 = 3;
-int led2 = 2;
+int led1 = 2;
+int led2 = 3;
 int led3 = 4;
 
 const char* ssid = "Sjss";        // WiFi의 SSID(수정필요)
@@ -40,6 +40,7 @@ void setup() {
     IPAddress ip = WiFi.localIP(); 
     sprintf(ips, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);  // IP형식으로 출력
     Serial.println(ips); 
+    WiFiClient client = server.available(); 
     } 
 void loop() { 
   // 클라이언트(폰, 패드등 동일 WiFi로 접속하는 기기)가 접속하였는지 체크
