@@ -2,6 +2,7 @@ import de.voidplus.leapmotion.*;
 import java.util.*;
 import com.leapmotion.leap.*;
 import http.requests.*;
+import java.net.*;
 
 
 LeapMotion leap;
@@ -67,19 +68,10 @@ void draw(){
        gesture_code.rec_flag = false;
        //do stuff here
        println("do stuff here, dy_code : ", gesture_code.dy_code);
-       
-       if(gesture_code.st_code=="001100" && gesture_code.dy_code=="s0"){
-         println(gesture_code.st_code);
-         print(gesture_code.dy_code);
-         GetRequest get = new GetRequest(baseURL+"1"); 
-         get.send();
-         println("Reponse Content: " + get.getContent());
-       }
-       else if(gesture_code.st_code=="001111" && gesture_code.dy_code=="s1"){
-         GetRequest get = new GetRequest(baseURL+"0"); 
-         get.send();
-         println("Reponse Content: " + get.getContent());
-       }
+       String signal = getDevice(gesture_code.st_code, gesture_code.dy_code);
+       print(signal);
+       String response = sendSignal(signal);
+       print(response);
        statusInit();
        break;
      }
