@@ -23,11 +23,11 @@ void gestureInit(){
 
 String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
   PVector direction        = g.getDirection();
-  
+
   String result="s9"; // s = Swipe , 0 = left, 1 = right , 9 = error
-   
+
   for (de.voidplus.leapmotion.Hand hand : leap.getHands ()){
-    
+
   switch(state){
     case 1: // Start
       break;
@@ -38,7 +38,7 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
       if ( !gesture_code.rec_flag ){
         break;
       }
-      else if(direction.array()[2]<0){ 
+      else if(direction.array()[2]<0){
         result = "s0";
         gesture_code.rec_flag = false;
         //println(result); //test code
@@ -46,9 +46,9 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
         //gesture_code.time_dy = hand.getTimeVisible();
         return result;
       }// Swipe left
-      
+
       else if(direction.array()[2]>0){
-        result = "s1"; 
+        result = "s1";
         gesture_code.rec_flag = false;
         //println(result); //test code
         gesture_code.dy_code = result;
@@ -57,9 +57,9 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
       } // Swipe right
      break;
   }
-  
+
   }
-  
+
   gesture_code.dy_code = result;
   return result;
 }
@@ -73,7 +73,10 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
   int     direction        = g.getDirection();
   String result="c9"; // c = Circle , 0 = AntiCircleWise, 1 = CircleWise , 9 = error
 
+  ArrayList count = new ArrayList();//finger count
   for (de.voidplus.leapmotion.Hand hand : leap.getHands ()) {
+    count = hand.getOutstretchedFingers();
+  }
 
   switch(state){
     case 1: // Start
@@ -102,7 +105,7 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
       }
       break;
   }
-  
+
   }
   gesture_code.dy_code = result;
   return result;
