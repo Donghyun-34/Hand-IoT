@@ -33,13 +33,14 @@ String mapTable(String st_code, String dy_code){ //example code for test
 
 String sendSignal(String http_add) {
   String reply = null;
-  GetRequest getSignal = new GetRequest(http_add);
+  
   try{ 
+    GetRequest getSignal = new GetRequest(http_add);
     getSignal.send(); 
-    }catch(Exception e){
+    reply = getSignal.getContent();
+  }catch(Exception e){
     reply = "fail";
     }
-  reply = getSignal.getContent();
   //println("Reponse Content: " + getSignal.getContent());
   return reply;
 }
