@@ -1,10 +1,24 @@
 import json
 
 class Device_map:
-    def __init__(self, name, sdid, dy_list):
+    def __init__(self, name, static='000000', dynamic=['1','2','3','4']):
         self.name = name
-        self.sd_id = sdid
-        self.dy_id = dict( {'c0' : dy_list[0], 'c1':dy_list[1], 's0':dy_list[2], 's1':dy_list[3]} )
+        self.sd_id = static
+        self.dy_id = dict( {'c0' : dynamic[0], 'c1':dynamic[1], 's0':dynamic[2], 's1':dynamic[3]} )
+
+    def checkValid(self) -> bool:
+        if len(self.static) != 6:
+            print("st_id not in form!!")
+            return False
+        
+    def setName(self, name):
+        self.name = name
+    
+    def setStatic(self, static):
+        self.sd_id = static
+
+    def setDynamic(self, dynamic):
+        self.dy_id = dict( {'c0' : dynamic[0], 'c1':dynamic[1], 's0':dynamic[2], 's1':dynamic[3]} )
 
 
 '''
