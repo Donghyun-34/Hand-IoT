@@ -1,0 +1,11 @@
+{
+    "name" : "test_device",
+    "address" : "http://testing",
+    "sd_id" : "111111",
+    "dy_id" : {
+        "c0":"1",
+        "c1":"2",
+        "s0":"3",
+        "s1":"4"
+    }
+}
