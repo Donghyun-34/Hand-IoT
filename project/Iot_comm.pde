@@ -17,17 +17,12 @@ String getDevice(String st_code, String  dy_code){
 }
 
 String mapTable(String st_code, String dy_code){ //example code for test
- String url=null;
-  if(st_code.equals("001100")){
-    url="192.168.124.136/gpio1";
+  String url=null;
+  for(int i=0;i< count;i++){
+    if(device[i].sd_id.equals(st_code)){
+      url=device[i].address +"/gpio/"+device[i].dy_id.getString(dy_code);
+    }
   }
-  if(dy_code.equals("s0")){
-    url+="/1";
-  }
-  else if(dy_code.equals("s1")){
-    url+="/0";
-  }
-  
   return url;
 }
 

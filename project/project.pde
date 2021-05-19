@@ -6,8 +6,8 @@ import java.net.*;
 
 
 LeapMotion leap;
-String baseURL="http://192.168.244.201/gpio1/";
-
+Device[] device = new Device[6];
+int count=0;
 ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100000", "011111", "000000", "00") );
 ArrayList<String> err_dyid = new ArrayList<String>( Arrays.asList("s9", "c9") );
 ArrayList<String> do_dyid = new ArrayList<String>( Arrays.asList("s1", "s0", "c1", "c0") );
@@ -20,13 +20,39 @@ void setup(){
   size(800, 500);
   background(255);
   leap = new LeapMotion(this);
+  ArrayList<String> file_name = new ArrayList();
+  
   leap.allowGestures("swipe, circle");
+  file_name = readMetaDataJson();
+  
+  for(int i=0; i<file_name.size();i++){
+    String file = file_name.get(i);
+    device[i] = readDeviceJson(file,i);
+    
+    println("name : "+device[i].name);
+    println("address : "+device[i].address);
+    println("sd_id : "+device[i].sd_id);
+    println("dy_id_c0 : "+device[i].dy_id);
+
+  }
+  count = file_name.size();
 }
 
 void draw(){
  background(0);
- long fps = leap.getId();
- text(fps, 70,70);
+ String abc = static_gesture();
+ text("Hand | Thumb | Index | Middle | Ring | Little",90,80);
+ if(abc !=""){
+   if(abc.substring(0,1).equals("1")) 
+     text("Right", 90,95);
+   else
+      text(" left", 90,95);
+   text(abc.substring(1,2), 140,95);
+   text(abc.substring(2,3), 185,95);
+   text(abc.substring(3,4), 225,95);
+   text(abc.substring(4,5), 265,95);
+   text(abc.substring(5,6), 300,95);
+ }
  
  switch(Status.stage){
    case 1 :
