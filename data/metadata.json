@@ -1,6 +1,7 @@
 {
     "files" : [
-        "test_device.json"
+        "test_device.json",
+        "test_device2.json"
     ],
     "counter" : 1
 }
