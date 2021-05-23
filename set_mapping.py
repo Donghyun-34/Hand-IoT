@@ -3,17 +3,18 @@ import os
 
 #give d_data:dictionary
 class Device:
-    def __init__(self, d_data):
-        self.name = d_data["name"]
-        self.address = d_data["address"]
-        self.st_id = d_data["st_id"]
-        self.dy_id = d_data["dy_id"]
+    def __init__(self,i_list:list):
+        if len(i_list) == 1:
+            self.name = i_list[0]["name"]
+            self.address = i_list[0]["address"]
+            self.st_id = i_list[0]["st_id"]
+            self.dy_id = i_list[0]["dy_id"]
+        if len(i_list) == 4:
+            self.name = i_list[0]
+            self.address = i_list[1]
+            self.st_id = i_list[2]
+            self.dy_id = i_list[3]
 
-    def __init__(self, name, add, stid, dyid):
-        self.name = name
-        self.address = add
-        self.st_id = stid
-        self.dy_id = dyid  
 
     def checkValid(self) -> bool:
         if len(self.static) != 6:
@@ -27,11 +28,13 @@ class Device:
     def setStatic(self, static):
         self.st_id = static
 
-    def setDynamic(self, dynamic):
-        self.dy_id = {'c0' : dynamic[0], 'c1':dynamic[1], 's0':dynamic[2], 's1':dynamic[3]}
+    def setDynamic(self, i_dy:list):
+        if len(i_dy) == 1:
+            dynamic = i_dy[0]
+            self.dy_id = {'c0' : dynamic[0], 'c1':dynamic[1], 's0':dynamic[2], 's1':dynamic[3]}
 
-    def setDynamic(self, dy_type, val):
-        self.dy_id[dy_type] = val
+        if len(i_dy) == 2:
+            self.dy_id[i_dy[0]] = i_dy[1]
 
     def setAddress(self, add):
         self.address = add
@@ -55,7 +58,7 @@ class Mapping_table:
         for it in d_list:
             with open('./Data/'+it, 'r') as d_file:
                 d_data = json.load(d_file)
-                temp = Device(d_data)
+                temp = Device([d_data])
                 self.addDevice(temp)
 
     def addDevice(self, dev):
@@ -83,7 +86,7 @@ class Mapping_table:
         del self.device_map[name]
 
 
-def options(input, map) -> bool:
+def options(input_arg, map) -> bool:
     exit_comm = ['e', 'exit', 'Exit']
     update_comm = ['u', 'update', 'Update']
     delete_comm = ['d', 'delete', 'Delete']
@@ -91,7 +94,7 @@ def options(input, map) -> bool:
     read_comm = ['r', 'read', 'Read']
     help_comm = ['h', 'help', 'Help']
 
-    argv = input.split(' ')
+    argv = input_arg.split(' ')
     
     if argv[0] in help_comm:
         print("WIP")
@@ -107,57 +110,57 @@ def options(input, map) -> bool:
                 while done_1:
                     print("Type attribute number willing to change or quit")
                     print("1.<name> | 2.<address> | 3.<static> | 4.<dynamic> | 5.Back")
-                    att_num = int( input("=> ") )
+                    att_num = input("=> ")
 
-                    if att_num == 1:
+                    if int( att_num ) == 1:
                         print("[=] Current name is : ", map.getDevice(argv[1]).getName())
                         i_att = input("[=] Change to ==> ")
                         map.getDevice(argv[1]).setName(i_att)
 
-                    elif att_num == 2:
+                    elif int( att_num ) == 2:
                         print("[=] Current address is : ", map.getDevice(argv[1]).getAddress())
                         i_att = input("[=] Change to ==> ")
                         map.getDevice(argv[1]).setAddress(i_att)
 
-                    elif att_num == 3:
+                    elif int( att_num ) == 3:
                         print("[=] Current static id is : ", map.getDevice(argv[1]).getStatic())
                         i_att = input("[=] Change to ==> ")
                         map.getDevice(argv[1]).setStatic(i_att)
 
-                    elif att_num == 4:
+                    elif int( att_num ) == 4:
                         done_2 = True
                         while done_2:
                             print("[=] Choose dynamic guesture number willing to change")
                             print("[=] 1.<anti-circle> | 2.<circle> | 3.<swipe-left> | 4.<swipe-right> | 5.Back")
-                            dy_num = int( input("[=] => ") )
+                            dy_num = input("[=] => ")
                 
-                            if dy_num == 1:
+                            if int( dy_num ) == 1:
                                 print("[=][=] Current anti-circle code is : ", map.getDevice(argv[1]).getDynamic()['c0'])
                                 i_att = input("[=][=] Change to ==> ")
-                                map.getDevice(argv[1]).setDynamic('c0', i_att)
+                                map.getDevice(argv[1]).setDynamic(['c0', i_att])
 
-                            elif dy_num == 2:
+                            elif int( dy_num ) == 2:
                                 print("[=][=] Current circle code is : ", map.getDevice(argv[1]).getDynamic()['c1'])
                                 i_att = input("[=][=] Change to ==> ")
-                                map.getDevice(argv[1]).setDynamic('c1', i_att)
+                                map.getDevice(argv[1]).setDynamic(['c1', i_att])
 
-                            elif dy_num == 3:
+                            elif int( dy_num ) == 3:
                                 print("[=][=] Current swipe-left code is : ", map.getDevice(argv[1]).getDynamic()['s0'])
                                 i_att = input("[=][=] Change to ==> ")
-                                map.getDevice(argv[1]).setDynamic('s0', i_att)
+                                map.getDevice(argv[1]).setDynamic(['s0', i_att])
 
-                            elif dy_num == 4:
+                            elif int( dy_num ) == 4:
                                 print("[=][=] Current swipe-right code is : ", map.getDevice(argv[1]).getDynamic()['s1'])
                                 i_att = input("[=][=] Change to ==> ")
-                                map.getDevice(argv[1]).setDynamic('s1', i_att)
+                                map.getDevice(argv[1]).setDynamic(['s1', i_att])
 
-                            elif dy_num == 5:
+                            elif int( dy_num ) == 5:
                                 done_2 = False
 
                             else:
                                 print("Wrong Input!!")
 
-                    elif att_num == 5:
+                    elif int( att_num ) == 5:
                         done_1 = False
 
                     else:
@@ -170,10 +173,10 @@ def options(input, map) -> bool:
             print("Wrong usage of 'update'!! Type 'h' or 'help' for more info.")
 
     elif argv[0] in delete_comm:
-        if(len(argv == 2)):
+        if(len(argv) == 2):
             if argv[1] in map.getDevices():
                 map.removeDevice(argv[1])
-                os.remove(argv[1]+'.json')
+                os.remove('./Data/'+argv[1]+'.json')
                 print(argv[1]+" is removed")
 
             else:
@@ -184,30 +187,33 @@ def options(input, map) -> bool:
 
     elif argv[0] in add_comm:
         i_name = input("Type device name : ")
-        i_add =  input("Type device address : ")
+        i_add = input("Type device address : ")
         i_stid = input("Type device static id : ")
         i_dyid = {}
         i_dyid['c0'] = input("Type anti-circle gesture code : ")
         i_dyid['c1'] = input("Type circle gesture code : ")
         i_dyid['s0'] = input("Type swipe-left gesture code : ")
         i_dyid['s1'] = input("Type swipe-right gesture code : ")
-        temp = Device(i_name, i_add, i_stid, i_dyid)
+        temp = Device([i_name, i_add, i_stid, i_dyid])
         map.addDevice(temp)
         print("Finish adding ",temp.getName())
 
     elif argv[0] in read_comm:
-        if(len(argv == 2)):
+        if(len(argv) == 1):
             print("Total device regi-ed : ")
             cnt = 1
             for it in map.getDevices():
-                print(cnt+" : ",it)
+                print(cnt," : ",it)
                 cnt += 1
+
+        elif(len(argv) == 2):
+            print("wip")
 
         else:
             print("Wrong usage of 'read'!! Type 'h' or 'help' for more info.")
 
     else:
-        print("Unknown option \'", argv[0], "\' !!!" )
+        print("Unknown option \'", argv[:], "\' !!!" )
 
     return True
 
@@ -232,6 +238,8 @@ except FileNotFoundError:
     #파일 읽어오기 / 없으면 빈 파일 생성
 #수행 동작 선택
 
+
+
 cont = True
 while(cont):
     op = input("listening[=]")
@@ -239,3 +247,4 @@ while(cont):
     map.updateFile()
     #추가 / 삭제 / 수정 / 종료 / 출력
 
+#print( map.getDevice('test_device3').getDynamic() )
