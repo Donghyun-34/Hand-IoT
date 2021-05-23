@@ -233,7 +233,10 @@ except FileNotFoundError:
     with open('./Data/metadata.json', 'w') as j_file:
         init_data = {"files" : []}
         json.dump(init_data, j_file, indent = 3)
-        map = Mapping_table(init_data)
+        
+    with open('./Data/metadata.json', 'r') as m_file:
+        m_data = json.load(m_file)
+        map = Mapping_table(m_data["files"])
 
     #파일 읽어오기 / 없으면 빈 파일 생성
 #수행 동작 선택
