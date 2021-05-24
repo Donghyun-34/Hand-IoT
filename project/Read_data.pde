@@ -1,18 +1,4 @@
 JSONObject json;
-/**
-void readMetaDataJson(){
-  json = loadJSONObject("../data/metadata.json");
-  JSONArray files = json.getJSONArray("files");
-  
-  Device[] device = new Device[6];
-  
-  for(int i=0; i<files.size();i++){
-    String file_name = files.getString(i);
-    device[i] = readDeviceJson(file_name,i);
-
-  }
-}
-**/
 
 ArrayList readMetaDataJson(){
   json = loadJSONObject("../data/metadata.json");
