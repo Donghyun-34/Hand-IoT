@@ -40,8 +40,8 @@ void draw(){
    text(device[i].name + " / " + device[i].address + " / " +device[i].st_id + " / " + "(s0 : " + device[i].dy_id.getString("s0") + 
    " / s1 : " + device[i].dy_id.getString("s1") + " / c0 : " + device[i].dy_id.getString("c0") + " / c1 : " + device[i].dy_id.getString("c1")+")", 90, 150+i*20); //print Device info
  }
- text("current Static Gesture : "+ gesture_code.st_code,90,220);
- text("current Dynamic Gesture : "+ gesture_code.dy_code,90,240);
+ text("Current Static      Gesture : "+ gesture_code.st_code,200,80);
+ text("Current Dynamic Gesture : "+ gesture_code.dy_code,200,100);
  
  switch(Status.stage){
    case 1 :
