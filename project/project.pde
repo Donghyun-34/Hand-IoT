@@ -28,31 +28,20 @@ void setup(){
   for(int i=0; i<file_name.size();i++){
     String file = file_name.get(i);
     device[i] = readDeviceJson(file,i);
-    
-    println("name : "+device[i].name);
-    println("address : "+device[i].address);
-    println("sd_id : "+device[i].sd_id);
-    println("dy_id_c0 : "+device[i].dy_id);
-
   }
   count = file_name.size();
 }
 
 void draw(){
  background(0);
- String abc = static_gesture();
- text("Hand | Thumb | Index | Middle | Ring | Little",90,80);
- if(abc !=""){
-   if(abc.substring(0,1).equals("1")) 
-     text("Right", 90,95);
-   else
-      text(" left", 90,95);
-   text(abc.substring(1,2), 140,95);
-   text(abc.substring(2,3), 185,95);
-   text(abc.substring(3,4), 225,95);
-   text(abc.substring(4,5), 265,95);
-   text(abc.substring(5,6), 300,95);
+ 
+ text("Device List",90,130);
+ for(int i=0; i<count;i++){
+   text(device[i].name + " / " + device[i].address + " / " +device[i].st_id + " / " + "(s0 : " + device[i].dy_id.getString("s0") + 
+   " / s1 : " + device[i].dy_id.getString("s1") + " / c0 : " + device[i].dy_id.getString("c0") + " / c1 : " + device[i].dy_id.getString("c1")+")", 90, 150+i*20); //print Device info
  }
+ text("Current Static      Gesture : "+ gesture_code.st_code,200,80);
+ text("Current Dynamic Gesture : "+ gesture_code.dy_code,200,100);
  
  switch(Status.stage){
    case 1 :
@@ -95,9 +84,13 @@ void draw(){
        //do stuff here
        println("do stuff here, dy_code : ", gesture_code.dy_code);
        String signal = getDevice(gesture_code.st_code, gesture_code.dy_code);
-       print(signal);
-       String response = sendSignal(signal);
-       print(response);
+       if(signal.equals("error")){ //signal is null
+         println("error"); // if error occured do nothing
+       }
+       else{
+         String response = sendSignal(signal);// get response
+         print(response);
+       }
        statusInit();
        break;
      }

@@ -40,7 +40,6 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
         else if(direction.array()[2]<0){
           result = "s0";
           gesture_code.rec_flag = false;
-          //println(result); //test code
           gesture_code.dy_code = result;
           //gesture_code.time_dy = hand.getTimeVisible();
           return result;
@@ -49,7 +48,6 @@ String leapOnSwipeGesture(de.voidplus.leapmotion.SwipeGesture g, int state){
         else if(direction.array()[2]>0){
           result = "s1";
           gesture_code.rec_flag = false;
-          //println(result); //test code
           gesture_code.dy_code = result;
           //gesture_code.time_dy = hand.getTimeVisible();
           return result;
@@ -86,7 +84,6 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
         else if(direction == 0){ // Anticlockwise/Left gesture
           result = "c0";
           gesture_code.rec_flag = false;
-          //println(result); //test code
           gesture_code.dy_code = result;
           //gesture_code.time_dy = hand.getTimeVisible();
           return result;
@@ -94,7 +91,6 @@ String leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
         else if(direction == 1){ // Clockwise/Right gesture
           result = "c1";
           gesture_code.rec_flag = false;
-          //println(result); //test code
           gesture_code.dy_code = result;
           //gesture_code.time_dy = hand.getTimeVisible();
           return result;

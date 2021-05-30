@@ -10,7 +10,6 @@ String static_gesture(){
       if(finger.isExtended()==true){outstretched +="1";}
       else if(finger.isExtended()==false){outstretched +="0";}       
     }
-    //gesture_code.time_st = hand.timeVisible();
   }
   gesture_code.st_code = outstretched;
   return outstretched;
