@@ -1,7 +1,7 @@
 String getDevice(String st_code, String  dy_code){
   String http_add="http://";
   String ip_add = "error";
-  if(!ban_stid.contains(st_code) && !err_dyid.contains(dy_code)){
+  if(!ban_stid.contains(st_code) && do_dyid.contains(dy_code)){
     println(st_code);
     for(int i=0;i< count;i++){
       if(device[i].st_id.equals(st_code)){ // matching device
