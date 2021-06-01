@@ -21,7 +21,6 @@ Device readDeviceJson(String DeviceJson, int i){
   JSONObject dy_id = json.getJSONObject("dy_id");
   
   
-  Device[] device = new Device[6];
   device[i] = new Device(name,address,st_id,dy_id);
   
   return device[i];
