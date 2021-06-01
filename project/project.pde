@@ -6,7 +6,7 @@ import java.net.*;
 
 
 LeapMotion leap;
-Device[] device = new Device[6];
+Device[] device = new Device[60];
 int count=0;
 ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100000", "011111", "000000", "00") );
 ArrayList<String> do_dyid = new ArrayList<String>( Arrays.asList("s1", "s0", "c1", "c0") );
@@ -92,10 +92,10 @@ void draw(){
          text("[E]",320,60);
        }
        else{
-         println("gotcha!!");
+         println("Device Action");
          text("[X]",290,60);
-         //String response = sendSignal(signal);// get response
-         //print(response);
+         String response = sendSignal(signal);// get response
+         print(response);
        }
        statusInit();
        break;
