@@ -22,6 +22,7 @@ void statusInit(){
   Status.stage = 1;
   Status.timeout_stamp = -1;
   Status.timetemp_stamp = -1;
+  gestureInit();
 }
 
 
