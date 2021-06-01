@@ -51,7 +51,7 @@ void leapOnCircleGesture(de.voidplus.leapmotion.CircleGesture g, int state){
   int     direction        = g.getDirection();
   // c = Circle , 0 = AntiCircleWise, 1 = CircleWise , 9 = error
 
-  if(radius < 70){
+  if(radius < 70 && radius > 30){
   switch(state){
     case 1: // Start
       break;
