@@ -10,12 +10,8 @@ Stepper step1(2048, IN1, IN3, IN2, IN4);
 
 int lap = 3072; //2048-->360도 회전
 
-const char* ssid = "Sjss";        // WiFi의 SSID(수정필요)
-const char* pass = "Sjss0117";     // WiFi의 비밀번호(수정필요)
-/*
 const char* ssid = "dongs";        // WiFi의 SSID(수정필요)
 const char* pass = "3344660!";     // WiFi의 비밀번호(수정필요)
- */
 
 int status = WL_IDLE_STATUS;
 WiFiServer server(80);
@@ -37,9 +33,11 @@ void setup() {
    }
     Serial.println("");
     Serial.println("WiFi connected");
+    
     // 서버 시작
     server.begin();
     Serial.println("Server started");
+    
     // 할당받은 IP 주소를 시리얼 모니터로 출력
     char ips[24];
     IPAddress ip = WiFi.localIP();
@@ -60,6 +58,7 @@ void loop() {
   while(!client.available()){
     delay(1);
   }
+  
   // 요청(데이터)의 첫 줄을 읽어 req에 저장
   String req = client.readStringUntil('\r');
   Serial.println(req);
@@ -73,8 +72,8 @@ void loop() {
     step1.step(-lap); //왼쪽으로 한바퀴
     done = 2;
   }
-
   client.flush();
+  
   // 요청에 대해 응답하기.
   String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n";
   if(done==1)
