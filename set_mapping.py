@@ -23,10 +23,10 @@ class Device:
             print("st_id not in form!!")
             return False
         return True
-        
+
     def setName(self, name):
         self.name = name
-    
+
     def setStatic(self, static):
         self.st_id = static
 
@@ -97,7 +97,7 @@ def options(input_arg, map) -> bool:
     help_comm = ['h', 'help', 'Help']
 
     argv = input_arg.split(' ')
-    
+
     if argv[0] in help_comm:
         print("WIP")
 
@@ -135,7 +135,7 @@ def options(input_arg, map) -> bool:
                             print("[=] Choose dynamic guesture number willing to change")
                             print("[=] 1.<anti-circle> | 2.<circle> | 3.<swipe-left> | 4.<swipe-right> | 5.Back")
                             dy_num = input("[=] => ")
-                
+
                             if int( dy_num ) == 1:
                                 print("[=][=] Current anti-circle code is : ", map.getDevice(argv[1]).getDynamic()['c0'])
                                 i_att = input("[=][=] Change to ==> ")
@@ -170,7 +170,7 @@ def options(input_arg, map) -> bool:
 
             else:
                 print("There is no device named ",argv[1])
-            
+
         else:
             print("Wrong usage of 'update'!! Type 'h' or 'help' for more info.")
 
@@ -183,7 +183,7 @@ def options(input_arg, map) -> bool:
 
             else:
                 print("There is no device named ",argv[1])
-        
+
         else:
             print("Wrong usage of 'delete'!! Type 'h' or 'help' for more info.")
 
@@ -242,8 +242,6 @@ except FileNotFoundError:
 
     #파일 읽어오기 / 없으면 빈 파일 생성
 #수행 동작 선택
-
-
 
 cont = True
 while(cont):
