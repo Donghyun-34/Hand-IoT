@@ -3,7 +3,7 @@ static class TriggerPoint {
      public static float when_open = -1;
 }
 
-boolean trigger() {
+boolean trigger(int s) {
   for(de.voidplus.leapmotion.Hand hand : leap.getHands()){
     
     if(hand.getGrabStrength()==1.000){// if fist-hand
@@ -15,7 +15,7 @@ boolean trigger() {
     
     float t_delta = TriggerPoint.when_open - TriggerPoint.when_fist; //time difference
     if(TriggerPoint.when_fist > 0 && TriggerPoint.when_open > 0 && TriggerPoint.when_open > TriggerPoint.when_fist){
-      if(t_delta <= 1){// when trigger happened
+      if(t_delta <= s){// when trigger happened
         println("True!!");
         TriggerPoint.when_fist = TriggerPoint.when_open = -1;
         return true;
