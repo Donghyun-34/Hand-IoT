@@ -1,7 +1,7 @@
 JSONObject json;
 
 ArrayList readMetaDataJson(){
-  json = loadJSONObject("../data/metadata.json");
+  json = loadJSONObject("./data/metadata.json");
   JSONArray files = json.getJSONArray("files");
   ArrayList<String> file_name = new ArrayList();
   
