@@ -1,6 +1,8 @@
 import json
 import os
 
+_FILEPATH_ = './project/Data/'
+
 #give d_data:dictionary
 class Device:
     def __init__(self,i_list:list):
@@ -56,7 +58,7 @@ class Mapping_table:
     def __init__(self, d_list):
         self.device_map = {}
         for it in d_list:
-            with open('./Data/'+it, 'r') as d_file:
+            with open(_FILEPATH_+it, 'r') as d_file:
                 d_data = json.load(d_file)
                 temp = Device([d_data])
                 self.addDevice(temp)
@@ -67,11 +69,11 @@ class Mapping_table:
     def updateFile(self):
         if bool( self.device_map ):
             #update metadata.json & device file
-            with open('./Data/metadata.json', 'w') as m_file:
+            with open(_FILEPATH_+'metadata.json', 'w') as m_file:
                 file_list = []
                 for item in self.device_map.values():
                     file_list.append(item.getName()+".json")
-                    with open('./Data/'+item.getName()+".json", 'w') as d_file:
+                    with open(_FILEPATH_+item.getName()+".json", 'w') as d_file:
                         json.dump(item.__dict__, d_file, indent = 3)
                 data = {"files" : file_list}
                 json.dump(data, m_file, indent = 3)
@@ -176,7 +178,7 @@ def options(input_arg, map) -> bool:
         if(len(argv) == 2):
             if argv[1] in map.getDevices():
                 map.removeDevice(argv[1])
-                os.remove('./Data/'+argv[1]+'.json')
+                os.remove(_FILEPATH_+argv[1]+'.json')
                 print(argv[1]+" is removed")
 
             else:
@@ -223,18 +225,18 @@ def options(input_arg, map) -> bool:
 
 #전처리
 try:
-    with open('./Data/metadata.json', 'r') as m_file:
+    with open(_FILEPATH_+'metadata.json', 'r') as m_file:
         m_data = json.load(m_file)
         map = Mapping_table(m_data["files"])
 
 except FileNotFoundError:
     print("There is no mapping table!!!")
     print("Creating New file...")
-    with open('./Data/metadata.json', 'w') as j_file:
+    with open(_FILEPATH_+'metadata.json', 'w') as j_file:
         init_data = {"files" : []}
         json.dump(init_data, j_file, indent = 3)
         
-    with open('./Data/metadata.json', 'r') as m_file:
+    with open(_FILEPATH_+'metadata.json', 'r') as m_file:
         m_data = json.load(m_file)
         map = Mapping_table(m_data["files"])
 
