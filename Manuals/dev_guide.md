@@ -147,3 +147,43 @@ Returns | None
 
 3. 이후 인식된 아두이노 디바이스 목록 출력
 </br>
+
+## Arduino Part Function
+
+### Window_living_room.INO, Window_room.INO
+항목|설명
+:---:|---
+Name | extract_command
+Description | 시스템에서 송신한 메시지에서 실질적인 명령문 추출 및 판단<br>1. 명령문이 “/gpio1/0"이면 1을 done에 저장한다.<br>2. 명령문이 “/gpio1/1”이면 2를 done에 저장한다.
+Stntax | done = extract_command(str)
+Parameters | String str : 시스템으로부터 전달받은 메시지
+Returns | int : 명령문을 추출해서 판단한 작업 번호
+</br>
+
+항목|설명
+:---:|---
+Name | create_response
+Description | 시스템에서 보낼 응답 메시지를 만드는 함수
+Stntax | create_response(done, s)
+Parameters | int done : extract_command 함수에서 판단한 작업 번호<br>String* s : 응답 메시지를 담을 문자열의 주소, Call By Address 방식 사용
+Returns | None
+</br>
+
+### LED.INO
+항목|설명
+:---:|---
+Name | extract_command
+Description | 시스템에서 송신한 메시지에서 실질적인 명령문 추출 및 판단<br>1. 명령문이 “/gpio1/0"이면 0을 val에 저장한다.<br>2. 명령문이 “/gpio1/1”이면 1를 val에 저장한다.
+Stntax | val = extract_command(str)
+Parameters | String str : 시스템으로부터 전달받은 메시지
+Returns | int : 명령문을 추출해서 판단한 작업 번호
+</br>
+
+항목|설명
+:---:|---
+Name | create_response
+Description | 시스템에서 보낼 응답 메시지를 만드는 함수
+Stntax | create_response(done, s)
+Parameters | int val : extract_command 함수에서 판단한 작업 번호<br>String* s : 응답 메시지를 담을 문자열의 주소, Call By Address 방식 사용
+Returns | None
+</br>
