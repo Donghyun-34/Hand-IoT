@@ -13,4 +13,4 @@
   3. 이중호
 
 
-## [Link to User Guide](Manuals/table_of_Contents.md)
+## [Link to User Guide](Manuals/table_of_contents.md)
