@@ -44,7 +44,7 @@ void draw(){
    case 1 :
      text("[W]",200,60);
      statusInit();
-     if( trigger() ){
+     if( trigger(1) ){
        Status.stage = 2;
        Status.timeout_stamp = leap.getTimestamp();
        gestureInit();
