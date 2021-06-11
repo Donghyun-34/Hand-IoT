@@ -90,7 +90,7 @@ Returns |  ArrayList&#60;String&#62;
 Name | readDeviceJson()
 Description | 기기 JSON 파일에서 해당 기기의 이름, ip주소, 정적 제스처 아이디(st_id), 동적 제스처 아이디(dy_id)를 가져오는 함수
 Stntax | readDeviceJson(DeviceJson, i)
-Parameters | None
+Parameters | String DeviceJson : 읽어올 Json 파일의 이름<br><br>int i : 전역으로 선언된 Device 클래스에 대한 배열에 i번째에 접근하기 위해 사용
 Returns | Device::Class
 </br>
 
