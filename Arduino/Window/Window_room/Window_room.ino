@@ -1,5 +1,4 @@
 #include <Stepper.h>
-#include <SPI.h>
 #include <WiFiNINA.h>
 
 int IN1 = 2; //IN1은 2번 핀에 연결
@@ -10,12 +9,8 @@ Stepper step1(2048, IN1, IN3, IN2, IN4);
 
 int lap = 3072; //2048-->360도 회전
 
-const char* ssid = "Sjss";        // WiFi의 SSID(수정필요)
-const char* pass = "Sjss0117";     // WiFi의 비밀번호(수정필요)
-/*
 const char* ssid = "dongs";        // WiFi의 SSID(수정필요)
 const char* pass = "3344660!";     // WiFi의 비밀번호(수정필요)
- */
 
 int status = WL_IDLE_STATUS;
 WiFiServer server(80);
@@ -35,7 +30,6 @@ void setup() {
     // WiFi에 접속할 때까지 10초간 대기
     delay(10000);
    }
-    Serial.println("");
     Serial.println("WiFi connected");
     // 서버 시작
     server.begin();
@@ -60,32 +54,18 @@ void loop() {
   while(!client.available()){
     delay(1);
   }
+  
   // 요청(데이터)의 첫 줄을 읽어 req에 저장
   String req = client.readStringUntil('\r');
   Serial.println(req);
   client.flush();
 
-  if (req.indexOf("/gpio1/0") != -1) {
-    step1.step(lap); //오른쪽으로 한바퀴
-    done = 1;
-  }
-  else if (req.indexOf("/gpio1/1") != -1) {
-    step1.step(-lap); //왼쪽으로 한바퀴
-    done = 2;
-  }
-
+  done = extrac_command(req);
   client.flush();
+  
   // 요청에 대해 응답하기.
   String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n";
-  if(done==1)
-  {
-    s += "Motor is turn to Clockwise";
-  }
-  else if (done == 2)
-  {
-    s += "Motor is turn to AntiClockwise";
-  }
-  s += "</html>\n";
+  create_response(done, &s);
 
   // 응답할 내용을 클라이언트(폰, 패드 등 WiFi로 접속하는 기기)로 전송
   client.print(s);   //  예시 "LED1 is ON"
@@ -93,5 +73,31 @@ void loop() {
   client.stop();
 
   Serial.println("Client disonnected");
+}
 
+int extrac_command(String str){
+  int done = 0;
+  
+  if (str.indexOf("/gpio1/0") != -1) {
+    step1.step(lap); //오른쪽으로 한바퀴
+    done = 1;
+  }
+  else if (str.indexOf("/gpio1/1") != -1) {
+    step1.step(-lap); //왼쪽으로 한바퀴
+    done = 2;
+  }
+
+  return done;
+}
+
+void create_response(int done, String* s){
+  if(done==1)
+  {
+    *s += "Motor is turn to Clockwise";
+  }
+  else if (done == 2)
+  {
+    *s += "Motor is turn to AntiClockwise";
+  }
+  *s += "</html>\n";
 }

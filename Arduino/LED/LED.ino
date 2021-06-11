@@ -1,4 +1,3 @@
-#include <SPI.h> 
 #include <WiFiNINA.h> 
 
 int led1 = 2;
@@ -24,7 +23,6 @@ void setup() {
     // WiFi에 접속할 때까지 10초간 대기
     delay(10000); 
     } 
-    Serial.println(""); 
     Serial.println("WiFi connected"); 
     // 서버 시작
     
@@ -45,6 +43,7 @@ void loop() {
   while(!client.available()){ 
     delay(1); 
   } 
+  
   // 요청(데이터)의 첫 줄을 읽어 req에 저장
   String req = client.readStringUntil('\r'); 
   Serial.println(req); 
@@ -52,28 +51,37 @@ void loop() {
   
   int val1 = 0; 
   
-  if (req.indexOf("/gpio1/0") != -1) { 
-    val1 = 0;  
-  } 
-  else if (req.indexOf("/gpio1/1") != -1) { 
-    val1 = 1; 
-  }
-  else { 
-    Serial.println(" ... "); 
-    client.stop(); 
-    return; 
-  } 
+  val1 = extrac_command(req);
 
   digitalWrite(led1, val1);
   client.flush(); 
+  
   // 요청에 대해 응답하기. 
   String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n"; 
-  s += "LED1 is "; 
-  s += (val1)? "ON": "OFF"; // vall의 값이 참이면('0'아닌 값은 모두 참) 'ON'저장, 거짓이면'OFF'저장
-  s += "</html>\n"; 
+  create_response(val1, &s);
+  
   // 응답할 내용을 클라이언트(폰, 패드 등 WiFi로 접속하는 기기)로 전송
   client.print(s);   //  예시 "LED1 is ON"  
   delay(2); 
   client.stop(); 
   Serial.println("Client disonnected");     
+}
+
+int extrac_command(String str){
+  int val = 0;
+  
+  if (str.indexOf("/gpio1/0") != -1) { 
+    val = 0;  
+  } 
+  else if (str.indexOf("/gpio1/1") != -1) { 
+    val = 1; 
+  }
+
+  return val;
+}
+
+void create_response(int val1, String* s){
+  *s += "LED1 is "; 
+  *s += (val1)? "ON": "OFF"; // vall의 값이 참이면('0'아닌 값은 모두 참) 'ON'저장, 거짓이면'OFF'저장
+  *s += "</html>\n"; 
 }
