@@ -12,7 +12,7 @@ ArrayList<String> ban_stid = new ArrayList<String>( Arrays.asList("111111", "100
 ArrayList<String> do_dyid = new ArrayList<String>( Arrays.asList("s1", "s0", "c1", "c0") );
 static final long _TIMEOUT_ = 4000000; // set time for timeout
 static final long _TIMESG_ = 1000000; // set time for static_gesture recongization
-static final long _TIMEDG_ = 100000; // set time for static_gesture recongization
+static final long _TIMEDG_ = 100000; // set time for dynamic_gesture recongization
  
 static String last_mem = "00";
  
